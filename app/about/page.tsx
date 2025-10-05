@@ -1,104 +1,165 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, Users, Globe, Rocket } from "lucide-react";
+import { Users, Rocket, Activity, TrendingUp, User, Globe } from "lucide-react";
 import { Navigation } from "@/components/navigation";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function About() {
-  const values = [
+export default function AdminDashboard() {
+  const stats = [
     {
-      icon: Rocket,
-      title: "Innovation First",
-      description: "We push the boundaries of what's possible in web hosting and deployment."
-    },
-    {
+      title: "Total Users",
+      value: "1,245",
+      change: "+12%",
       icon: Users,
-      title: "Developer Focus",
-      description: "Built by developers, for developers. We understand your needs."
+      color: "cyan"
     },
     {
+      title: "Total Deployments",
+      value: "8,432",
+      change: "+23%",
+      icon: Rocket,
+      color: "blue"
+    },
+    {
+      title: "Active Projects",
+      value: "3,891",
+      change: "+8%",
       icon: Globe,
-      title: "Global Scale",
-      description: "Deploy anywhere, reach everywhere with our global infrastructure."
+      color: "green"
     },
     {
-      icon: Zap,
-      title: "Speed Matters",
-      description: "Every millisecond counts. We optimize for performance at every level."
+      title: "Bandwidth Used",
+      value: "2.5TB",
+      change: "+15%",
+      icon: Activity,
+      color: "purple"
     }
+  ];
+
+  const recentUsers = [
+    { id: 1, name: "John Doe", email: "john@example.com", projects: 3, joined: "2 days ago" },
+    { id: 2, name: "Jane Smith", email: "jane@example.com", projects: 5, joined: "1 week ago" },
+    { id: 3, name: "Bob Johnson", email: "bob@example.com", projects: 2, joined: "2 weeks ago" }
+  ];
+
+  const recentDeployments = [
+    { id: 1, project: "Portfolio Site", user: "John Doe", status: "deployed", time: "5 min ago" },
+    { id: 2, project: "E-commerce App", user: "Jane Smith", status: "building", time: "10 min ago" },
+    { id: 3, project: "Blog Platform", user: "Bob Johnson", status: "deployed", time: "1 hour ago" }
   ];
 
   return (
     <div className="min-h-screen">
       <Navigation />
 
-      <div className="pt-32 pb-20 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
-          >
-            <h1 className="text-5xl font-bold text-white mb-6">
-              About <span className="text-gradient">Zaynix Hosting</span>
-            </h1>
-            <p className="text-xl text-slate-400">
-              We&apos;re on a mission to make web deployment accessible, fast, and reliable for developers everywhere.
-            </p>
-          </motion.div>
+      <div className="pt-24 pb-12 px-4">
+        <div className="container mx-auto max-w-7xl">
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-white mb-2">Admin Dashboard</h1>
+            <p className="text-slate-400">Platform analytics and management</p>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="prose prose-invert max-w-none mb-16"
-          >
-            <Card className="mb-8">
-              <div className="p-8">
-                <h2 className="text-3xl font-bold text-white mb-4">Our Story</h2>
-                <p className="text-slate-300 leading-relaxed mb-4">
-                  Zaynix Hosting was founded in 2024 with a simple vision: make web deployment as easy as a single click.
-                  We saw developers struggling with complex deployment pipelines, confusing configurations, and unreliable hosting providers.
-                </p>
-                <p className="text-slate-300 leading-relaxed">
-                  Today, we serve thousands of developers worldwide, helping them deploy their projects with confidence and speed.
-                  Our platform combines cutting-edge technology with intuitive design to deliver the best deployment experience possible.
-                </p>
-              </div>
-            </Card>
-          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card>
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <CardDescription>{stat.title}</CardDescription>
+                      <stat.icon className="h-5 w-5 text-cyan-400" />
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
+                    <div className="flex items-center space-x-1 text-sm">
+                      <TrendingUp className="h-4 w-4 text-green-400" />
+                      <span className="text-green-400">{stat.change}</span>
+                      <span className="text-slate-400">from last month</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold text-white text-center mb-12">Our Values</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {values.map((value, index) => (
-                <motion.div
-                  key={value.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className="h-full">
-                    <CardHeader>
-                      <div className="mb-4 inline-flex p-3 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 w-fit">
-                        <value.icon className="h-6 w-6 text-cyan-400" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Users</CardTitle>
+                <CardDescription>Newly registered users</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentUsers.map((user) => (
+                    <div
+                      key={user.id}
+                      className="flex items-center justify-between p-3 rounded-lg border border-slate-800"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
+                          <User className="h-5 w-5 text-cyan-400" />
+                        </div>
+                        <div>
+                          <div className="font-medium text-white">{user.name}</div>
+                          <div className="text-sm text-slate-400">{user.email}</div>
+                        </div>
                       </div>
-                      <CardTitle>{value.title}</CardTitle>
-                      <CardDescription className="text-base">{value.description}</CardDescription>
-                    </CardHeader>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+                      <div className="text-right">
+                        <div className="text-sm text-slate-300">{user.projects} projects</div>
+                        <div className="text-xs text-slate-400">{user.joined}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Deployments</CardTitle>
+                <CardDescription>Latest deployment activity</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentDeployments.map((deployment) => (
+                    <div
+                      key={deployment.id}
+                      className="flex items-center justify-between p-3 rounded-lg border border-slate-800"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
+                          <Rocket className="h-5 w-5 text-cyan-400" />
+                        </div>
+                        <div>
+                          <div className="font-medium text-white">{deployment.project}</div>
+                          <div className="text-sm text-slate-400">by {deployment.user}</div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className={`text-sm font-medium ${
+                          deployment.status === "deployed" ? "text-green-400" : "text-cyan-400"
+                        }`}>
+                          {deployment.status}
+                        </div>
+                        <div className="text-xs text-slate-400">{deployment.time}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+
+Isko or badhiya se bana ke do mai ab se sab file dunga taki https://zaynix-hosting.vercel.app/ ye website or badhiya ban sake 
